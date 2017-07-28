@@ -8,7 +8,7 @@ const moment = require('moment');
 const constants = require('./constants');
 
 // Start database using file-async storage, and initialize
-const db = low('data.json', {
+const db = low('../data.json', {
   storage: fileAsync
 })
 db.defaults({ temperature: [], soil: [], humidity: [] })
