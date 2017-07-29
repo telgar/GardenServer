@@ -38,10 +38,10 @@ exports.setRoutes = function(server) {
 
     // GET /soil
     server.get('/soil', (req, res) => {
-        let soildDb = low('../soil.json', {
+        let soilDb = low('../soil.json', {
             storage: require('lowdb/lib/storages/file-async').read
         })        
-        const response = soildDb.get('soil')
+        const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
             .take(1)
@@ -71,7 +71,7 @@ exports.setRoutes = function(server) {
 
     // GET /soil/hour
     server.get('/soil/hour', (req, res) => {
-        let soildDb = low('../soil.json', {
+        let soilDb = low('../soil.json', {
             storage: require('lowdb/lib/storages/file-async').read
         })        
         const response = soilDb.get('soil')
@@ -107,7 +107,7 @@ exports.setRoutes = function(server) {
 
     // GET /soil/day
     server.get('/soil/day', (req, res) => {
-        let soildDb = low('../soil.json', {
+        let soilDb = low('../soil.json', {
             storage: require('lowdb/lib/storages/file-async').read
         })        
         const response = soilDb.get('soil')
@@ -143,7 +143,7 @@ exports.setRoutes = function(server) {
 
     // GET /soil/week
     server.get('/soil/week', (req, res) => {
-        let soildDb = low('../soil.json', {
+        let soilDb = low('../soil.json', {
             storage: require('lowdb/lib/storages/file-async').read
         })        
         const response = soilDb.get('soil')
@@ -178,7 +178,7 @@ exports.setRoutes = function(server) {
 
     // GET /soil/all-time
     server.get('/soil/all-time', (req, res) => {
-        let soildDb = low('../soil.json', {
+        let soilDb = low('../soil.json', {
             storage: require('lowdb/lib/storages/file-async').read
         })        
         const response = soilDb.get('soil')
