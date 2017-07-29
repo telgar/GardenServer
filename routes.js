@@ -24,7 +24,7 @@ exports.setRoutes = function(server) {
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
@@ -39,7 +39,7 @@ exports.setRoutes = function(server) {
     // GET /soil
     server.get('/soil', (req, res) => {
         let soilDb = low('../soil.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
@@ -54,7 +54,7 @@ exports.setRoutes = function(server) {
     // GET /temperature/hour
     server.get('/temperature/hour', (req, res) => {
         let tempDb = low('../temperature.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
@@ -72,7 +72,7 @@ exports.setRoutes = function(server) {
     // GET /soil/hour
     server.get('/soil/hour', (req, res) => {
         let soilDb = low('../soil.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
@@ -90,7 +90,7 @@ exports.setRoutes = function(server) {
     // GET /temperature/day
     server.get('/temperature/day', (req, res) => {
         let tempDb = low('../temperature.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
@@ -108,7 +108,7 @@ exports.setRoutes = function(server) {
     // GET /soil/day
     server.get('/soil/day', (req, res) => {
         let soilDb = low('../soil.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
@@ -126,7 +126,7 @@ exports.setRoutes = function(server) {
     // GET /temperature/week
     server.get('/temperature/week', (req, res) => {
         let tempDb = low('../temperature.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
@@ -144,7 +144,7 @@ exports.setRoutes = function(server) {
     // GET /soil/week
     server.get('/soil/week', (req, res) => {
         let soilDb = low('../soil.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
@@ -162,7 +162,7 @@ exports.setRoutes = function(server) {
     // GET /temperature/all-time
     server.get('/temperature/all-time', (req, res) => {
         let tempDb = low('../temperature.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
@@ -179,7 +179,7 @@ exports.setRoutes = function(server) {
     // GET /soil/all-time
     server.get('/soil/all-time', (req, res) => {
         let soilDb = low('../soil.json', {
-            storage: require('lowdb/lib/storages/file-async').read
+            storage: require('lowdb/lib/storages/file-async')
         })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
