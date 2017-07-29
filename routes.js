@@ -8,17 +8,21 @@ const moment = require('moment');
 const constants = require('./constants');
 
 // Start database using file-async storage, and initialize
-const db = low('../data.json', {
+const tempDb = low('../temperature.json', {
   storage: fileAsync
 })
-db.defaults({ temperature: [], soil: [], humidity: [] })
-  .write()
+tempDb.defaults({ temperature: [] }).write()
+
+const soildDb = low('../soil.json', {
+  storage: fileAsync
+})
+soildDb.defaults({ soil: [] }).write()
 
 exports.setRoutes = function(server) {
 
     // GET /temperature
     server.get('/temperature', (req, res) => {
-        const response = db.get('temperature')
+        const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
             .take(1)
@@ -30,7 +34,7 @@ exports.setRoutes = function(server) {
 
     // GET /soil
     server.get('/soil', (req, res) => {
-        const response = db.get('soil')
+        const response = soildDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
             .take(1)
@@ -42,7 +46,7 @@ exports.setRoutes = function(server) {
 
     // GET /temperature/hour
     server.get('/temperature/hour', (req, res) => {
-        const response = db.get('temperature')
+        const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
@@ -55,9 +59,24 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /soil/hour
+    server.get('/soil/hour', (req, res) => {
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(constants.HOUR / constants.SAMPLE_RATE)
+            .groupBy((o) => moment(new Date(o.timestamp).setMinutes(Math.round(new Date(o.timestamp).getMinutes() / 5) * 5)).format('h:mm a'))
+            .toPairs()
+            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .map((o) => { return { label: o.label, moisture: Math.round(_.meanBy(o.values, 'moisture') * 100) / 100 } })    
+            .value()
+
+        res.send(response)
+    })
+
     // GET /temperature/day
     server.get('/temperature/day', (req, res) => {
-        const response = db.get('temperature')
+        const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
@@ -70,9 +89,24 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /soil/day
+    server.get('/soil/day', (req, res) => {
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(constants.DAY / constants.SAMPLE_RATE)
+            .groupBy((o) => moment(new Date(o.timestamp).setMinutes(Math.round(new Date(o.timestamp).getMinutes() / 30) * 30)).format('MMMM Do, h:mm a'))
+            .toPairs()
+            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .map((o) => { return { label: o.label, moisture: Math.round(_.meanBy(o.values, 'moisture') * 100) / 100 } })   
+            .value()
+
+        res.send(response)
+    })
+
     // GET /temperature/week
     server.get('/temperature/week', (req, res) => {
-        const response = db.get('temperature')
+        const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
@@ -85,15 +119,44 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /soil/week
+    server.get('/soil/week', (req, res) => {
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(constants.WEEK / constants.SAMPLE_RATE)
+            .groupBy((o) => moment(new Date(o.timestamp).setMinutes(Math.round(new Date(o.timestamp).getMinutes() / 60) * 60)).format('MMMM Do, h:mm a'))
+            .toPairs()
+            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .map((o) => { return { label: o.label, moisture: Math.round(_.meanBy(o.values, 'moisture') * 100) / 100 } })   
+            .value()
+
+        res.send(response)
+    })
+
     // GET /temperature/all-time
     server.get('/temperature/all-time', (req, res) => {
-        const response = db.get('temperature')
+        const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
             .groupBy((o) => moment(new Date(o.timestamp).setMinutes(Math.round(new Date(o.timestamp).getMinutes() / 60) * 60)).format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { label: o.label, celsius: Math.round(_.meanBy(o.values, 'celsius') * 100) / 100 } })   
+            .value()    
+
+        res.send(response)
+    })
+
+    // GET /soil/all-time
+    server.get('/soil/all-time', (req, res) => {
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .groupBy((o) => moment(new Date(o.timestamp).setMinutes(Math.round(new Date(o.timestamp).getMinutes() / 60) * 60)).format('MMMM Do, h:mm a'))
+            .toPairs()
+            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .map((o) => { return { label: o.label, moisture: Math.round(_.meanBy(o.values, 'moisture') * 100) / 100 } })   
             .value()    
 
         res.send(response)
