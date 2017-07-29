@@ -7,21 +7,25 @@ const moment = require('moment');
 
 const constants = require('./constants');
 
-// Start database using file-async storage, and initialize
-const tempDb = low('../temperature.json', {
-  storage: fileAsync
+/* Start database using file-async storage, and initialize
+let tempDb = low('../temperature.json', {
+  storage: fileAsync.read
 })
 tempDb.defaults({ temperature: [] }).write()
 
 const soildDb = low('../soil.json', {
-  storage: fileAsync
+  storage: fileAsync.read
 })
 soildDb.defaults({ soil: [] }).write()
+*/
 
 exports.setRoutes = function(server) {
 
     // GET /temperature
     server.get('/temperature', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
@@ -34,6 +38,9 @@ exports.setRoutes = function(server) {
 
     // GET /soil
     server.get('/soil', (req, res) => {
+        let soildDb = low('../soil.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })        
         const response = soildDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
@@ -46,6 +53,9 @@ exports.setRoutes = function(server) {
 
     // GET /temperature/hour
     server.get('/temperature/hour', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
@@ -61,6 +71,9 @@ exports.setRoutes = function(server) {
 
     // GET /soil/hour
     server.get('/soil/hour', (req, res) => {
+        let soildDb = low('../soil.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
@@ -75,7 +88,10 @@ exports.setRoutes = function(server) {
     })
 
     // GET /temperature/day
-    server.get('/temperature/day', (req, res) => {
+    server.get('/c', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
@@ -91,6 +107,9 @@ exports.setRoutes = function(server) {
 
     // GET /soil/day
     server.get('/soil/day', (req, res) => {
+        let soildDb = low('../soil.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
@@ -106,6 +125,9 @@ exports.setRoutes = function(server) {
 
     // GET /temperature/week
     server.get('/temperature/week', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
@@ -121,6 +143,9 @@ exports.setRoutes = function(server) {
 
     // GET /soil/week
     server.get('/soil/week', (req, res) => {
+        let soildDb = low('../soil.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
@@ -136,6 +161,9 @@ exports.setRoutes = function(server) {
 
     // GET /temperature/all-time
     server.get('/temperature/all-time', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
@@ -150,6 +178,9 @@ exports.setRoutes = function(server) {
 
     // GET /soil/all-time
     server.get('/soil/all-time', (req, res) => {
+        let soildDb = low('../soil.json', {
+            storage: fileArequire('lowdb/lib/storages/file-async').read
+        })        
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
