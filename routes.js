@@ -10,6 +10,12 @@ const math = require('./math');
 
 exports.setRoutes = function(server) {
 
+    let arr = [1,2,4,2,1,3,4,5,3,1,2,80];
+
+    console.log('perc95: ', math.percentile(arr, .95));
+    console.log('mean: ', _.mean(arr))
+    console.log('rank: ', math.percentRank(arr, 95));
+
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
@@ -58,7 +64,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                celsius: math.roundToClosest(math.percentile(o.values.map(x => x.celsius), .95), 100) } })
+                celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
         res.send(response)
@@ -78,7 +84,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                moisture: math.roundToClosest(math.percentile(o.values.map(x => x.moisture), .95), 100) } })
+                moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
         res.send(response)
@@ -98,7 +104,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                celsius: math.roundToClosest(math.percentile(o.values.map(x => x.celsius), .95), 100) } })
+                celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
         res.send(response)
@@ -118,7 +124,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                moisture: math.roundToClosest(math.percentile(o.values.map(x => x.moisture), .95), 100) } })
+                moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
         res.send(response)
@@ -138,7 +144,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                celsius: math.roundToClosest(math.percentile(o.values.map(x => x.celsius), .95), 100) } })
+                celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
         res.send(response)
@@ -158,7 +164,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                moisture: math.roundToClosest(math.percentile(o.values.map(x => x.moisture), .95), 100) } })
+                moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
         res.send(response)
@@ -177,7 +183,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                celsius: math.roundToClosest(math.percentile(o.values.map(x => x.celsius), .95), 100) } })
+                celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()    
 
         res.send(response)
@@ -196,7 +202,7 @@ exports.setRoutes = function(server) {
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
                 label: o.label, 
-                moisture: math.roundToClosest(math.percentile(o.values.map(x => x.moisture), .95), 100) } })
+                moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()    
 
         res.send(response)
