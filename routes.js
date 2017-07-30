@@ -10,12 +10,6 @@ const math = require('./math');
 
 exports.setRoutes = function(server) {
 
-    let arr = [1,2,4,2,1,3,4,5,3,1,2,80];
-
-    console.log('perc95: ', math.percentile(arr, .95));
-    console.log('mean: ', _.mean(arr))
-    console.log('rank: ', math.percentRank(arr, 95));
-
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
