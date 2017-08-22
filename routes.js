@@ -17,6 +17,7 @@ exports.setRoutes = function(server) {
         })
         const response = tempDb.get('logs')
             .sortBy(['timestamp'])
+            .reverse()
             .take(100)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
