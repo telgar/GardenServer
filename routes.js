@@ -10,6 +10,24 @@ const math = require('./math');
 
 exports.setRoutes = function(server) {
 
+    // GET /logs
+    server.get('/logs', (req, res) => {
+        let tempDb = low('../logs.json', {
+            storage: require('lowdb/lib/storages/file-async')
+        })
+        const response = tempDb.get('logs')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(100)
+            .map((o) => { return { 
+                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                log: o.log
+            }})
+            .value()
+
+        res.send(response)
+    })
+
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
