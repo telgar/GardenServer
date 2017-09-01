@@ -53,7 +53,7 @@ exports.setRoutes = function(server) {
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600)
+            .take(600 * 24)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
@@ -87,7 +87,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600)
+            .take(600 * 24)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
@@ -121,7 +121,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600)
+            .take(600 * 24)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
