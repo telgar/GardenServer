@@ -5,7 +5,9 @@ function roundToClosestMinute (timestamp, closestMinute) {
 
 function roundToClosest(number, closest) {
 
-    return Math.round(number / closest * closest);
+    let result = number / closest * closest;
+
+    return +result.toFixed(1);
 }
 
 module.exports = {

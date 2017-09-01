@@ -45,6 +45,23 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /temperatures
+    server.get('/temperatures', (req, res) => {
+        let tempDb = low('../temperature.json', {
+            storage: require('lowdb/lib/storages/file-async')
+        })
+        const response = tempDb.get('temperature')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(600)
+            .map((o) => { return { 
+                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                celsius: math.roundToClosest(o.celsius, 100) } })
+            .value()
+
+        res.send(response)
+    })
+
     // GET /soil
     server.get('/soil1', (req, res) => {
         let soilDb = low('../soil1.json', {
@@ -62,6 +79,23 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /soils
+    server.get('/soil1s', (req, res) => {
+        let soilDb = low('../soil1.json', {
+            storage: require('lowdb/lib/storages/file-async')
+        })        
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(600)
+            .map((o) => { return { 
+                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                moisture: math.roundToClosest(o.moisture, 100) } })
+            .value()
+
+        res.send(response)
+    })
+
     // GET /soil
     server.get('/soil2', (req, res) => {
         let soilDb = low('../soil2.json', {
@@ -71,6 +105,23 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(1)
+            .map((o) => { return { 
+                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                moisture: math.roundToClosest(o.moisture, 100) } })
+            .value()
+
+        res.send(response)
+    })
+
+    // GET /soils
+    server.get('/soil2s', (req, res) => {
+        let soilDb = low('../soil2.json', {
+            storage: require('lowdb/lib/storages/file-async')
+        })        
+        const response = soilDb.get('soil')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(600)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
