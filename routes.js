@@ -53,7 +53,7 @@ exports.setRoutes = function(server) {
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600 * 6)
+            .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
@@ -62,7 +62,7 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
-    // GET /soil
+    // GET /soil1
     server.get('/soil1', (req, res) => {
         let soilDb = low('../soil1.json', {
             storage: require('lowdb/lib/storages/file-async')
@@ -79,7 +79,7 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
-    // GET /soils
+    // GET /soil1s
     server.get('/soil1s', (req, res) => {
         let soilDb = low('../soil1.json', {
             storage: require('lowdb/lib/storages/file-async')
@@ -87,7 +87,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600 * 6)
+            .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
@@ -96,7 +96,7 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
-    // GET /soil
+    // GET /soil2
     server.get('/soil2', (req, res) => {
         let soilDb = low('../soil2.json', {
             storage: require('lowdb/lib/storages/file-async')
@@ -113,7 +113,7 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
-    // GET /soils
+    // GET /soil2s
     server.get('/soil2s', (req, res) => {
         let soilDb = low('../soil2.json', {
             storage: require('lowdb/lib/storages/file-async')
@@ -121,7 +121,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .take(600 * 6)
+            .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
