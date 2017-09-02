@@ -38,6 +38,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
@@ -55,6 +56,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
@@ -72,6 +74,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
@@ -89,6 +92,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
@@ -106,6 +110,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
@@ -123,6 +128,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
@@ -143,6 +149,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
@@ -163,6 +170,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -183,6 +191,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -203,6 +212,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
@@ -223,6 +233,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -243,6 +254,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -263,6 +275,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
@@ -283,6 +296,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -303,6 +317,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
@@ -322,6 +337,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()    
@@ -341,6 +357,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()    
@@ -360,6 +377,7 @@ exports.setRoutes = function(server) {
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
+                timestamp: o.timestamp,
                 label: o.label, 
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()    
