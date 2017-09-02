@@ -3,7 +3,7 @@ const cors = require('cors')
 const low = require('lowdb')
 const _ = require('lodash')
 const fileAsync = require('lowdb/lib/storages/file-async')
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const constants = require('./constants');
 const math = require('./math');
@@ -20,7 +20,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(100)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 log: o.log
             }})
             .value()
@@ -38,7 +38,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
 
@@ -55,7 +55,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
 
@@ -72,7 +72,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -89,7 +89,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -106,7 +106,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(1)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -123,7 +123,7 @@ exports.setRoutes = function(server) {
             .reverse()
             .take(60 * 12)
             .map((o) => { return { 
-                label: moment(o.timestamp).format('MMMM Do, h:mm:ss a'), 
+                label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -139,7 +139,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).format('h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -159,7 +159,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).format('h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -179,7 +179,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).format('h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -199,7 +199,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -219,7 +219,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -239,7 +239,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -259,7 +259,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -279,7 +279,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -299,7 +299,7 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -318,7 +318,7 @@ exports.setRoutes = function(server) {
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -337,7 +337,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
@@ -356,7 +356,7 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).format('MMMM Do, h:mm a'))
+            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
             .toPairs()
             .map((o) => { return _.zipObject(["label", "values"], o); } )
             .map((o) => { return { 
