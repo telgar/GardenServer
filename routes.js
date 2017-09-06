@@ -21,6 +21,7 @@ exports.setRoutes = function(server) {
             .take(100)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 log: o.log
             }})
             .value()
@@ -39,6 +40,7 @@ exports.setRoutes = function(server) {
             .take(1)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
 
@@ -56,6 +58,7 @@ exports.setRoutes = function(server) {
             .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 celsius: math.roundToClosest(o.celsius, 100) } })
             .value()
 
@@ -73,6 +76,7 @@ exports.setRoutes = function(server) {
             .take(1)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -90,6 +94,7 @@ exports.setRoutes = function(server) {
             .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -107,6 +112,7 @@ exports.setRoutes = function(server) {
             .take(1)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -124,6 +130,7 @@ exports.setRoutes = function(server) {
             .take(60 * 12)
             .map((o) => { return { 
                 label: moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a'), 
+                timestamp: o.timestamp,
                 moisture: math.roundToClosest(o.moisture, 100) } })
             .value()
 
@@ -139,11 +146,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 5))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 5)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 5),
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
@@ -159,11 +167,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 5))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 5)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 5),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -179,11 +188,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.HOUR / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 5)).tz("Europe/London").format('h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 5))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 5)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 5),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -199,11 +209,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 30))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 30)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 30),
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
@@ -219,11 +230,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 30))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 30)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 30),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -239,11 +251,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.DAY / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 30)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 30))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 30)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 30),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -259,11 +272,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()
 
@@ -279,11 +293,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -299,11 +314,12 @@ exports.setRoutes = function(server) {
             .sortBy(['timestamp'])
             .reverse()
             .take(constants.WEEK / constants.SAMPLE_RATE)
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()
 
@@ -318,11 +334,12 @@ exports.setRoutes = function(server) {
         const response = tempDb.get('temperature')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 celsius: math.roundToClosest(_.mean(o.values.map(x => x.celsius)), 100) } })
             .value()    
 
@@ -337,11 +354,12 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()    
 
@@ -356,11 +374,12 @@ exports.setRoutes = function(server) {
         const response = soilDb.get('soil')
             .sortBy(['timestamp'])
             .reverse()
-            .groupBy((o) => moment(math.roundToClosestMinute(o.timestamp, 60)).tz("Europe/London").format('MMMM Do, h:mm a'))
-            .toPairs()
-            .map((o) => { return _.zipObject(["label", "values"], o); } )
+            .groupBy((o) => math.roundToClosestMinute(o.timestamp, 60))            
+            .toPairs()           
+            .map((o) => { return _.zipObject(["timestamp", "values"], o); } )
             .map((o) => { return { 
-                label: o.label, 
+                label: moment(math.roundToClosestMinute(new Date(o.timestamp), 60)).tz("Europe/London").format('MMMM Do, h:mm a'),
+                timestamp: math.roundToClosestMinute(new Date(o.timestamp), 60),
                 moisture: math.roundToClosest(_.mean(o.values.map(x => x.moisture)), 100) } })
             .value()    
 
