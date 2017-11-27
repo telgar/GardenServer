@@ -32,7 +32,7 @@ exports.setRoutes = function(server) {
     // GET /time
     server.get('/time', (req, res) => {
         
-        const response = new Date().getTime();
+        const response = moment(new Date()).tz("Europe/London").format('MMMM Do, h:mm:ss a');
 
         res.send(response)
     })
