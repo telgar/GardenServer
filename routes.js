@@ -29,6 +29,14 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /time
+    server.get('/time', (req, res) => {
+        
+        const response = new Date().getTime();
+
+        res.send(response)
+    })
+
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
