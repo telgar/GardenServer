@@ -37,6 +37,21 @@ exports.setRoutes = function(server) {
         res.send(response)
     })
 
+    // GET /watered
+    server.get('/watered', (req, res) => {
+        let wateringDb = low('../watering.json', {
+            storage: require('lowdb/lib/storages/file-async')
+        })
+        const response = wateringDb.get('logs')
+            .sortBy(['timestamp'])
+            .reverse()
+            .take(1)
+            .map((o) => { return moment(o.timestamp).tz("Europe/London").format('MMMM Do, h:mm:ss a') })
+            .value()
+
+        res.send(response)
+    })
+
     // GET /temperature
     server.get('/temperature', (req, res) => {
         let tempDb = low('../temperature.json', {
